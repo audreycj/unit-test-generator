@@ -158,4 +158,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Node modules
+node_modules/
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,java,visualstudiocode,maven
