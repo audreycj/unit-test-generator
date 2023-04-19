@@ -3,6 +3,12 @@
 
 package com.audreynanual.unittestgenerator;
 
+import okhttp3.*;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+@Component // indicates that this class is a Spring component
 public class OpenAIAPIClient {
     
 }
