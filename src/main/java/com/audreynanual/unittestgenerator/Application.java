@@ -1,5 +1,6 @@
-// This is the main entry point for the Spring Boot application.
-// It initializes the Spring context and wires together the different components of the application.
+// This file contains the main method and will be the entry point for the application.
+// It will be responsible for parsing command-line arguments using the Picocli library and invoking the appropriate methods based on user input.
+// It may also be responsible for initializing any necessary objects or services that your application requires to run.
 
 package com.audreynanual.unittestgenerator;
 
