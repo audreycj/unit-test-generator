@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UnitTestGeneratorApplication {
 
 	public static void main(String[] args) {
+
+		//‘SpringApplication.run’ is the entry point to the Spring application
 		SpringApplication.run(UnitTestGeneratorApplication.class, args);
 	}
 
