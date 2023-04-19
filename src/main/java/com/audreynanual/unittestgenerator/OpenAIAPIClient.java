@@ -3,12 +3,15 @@
 
 package com.audreynanual.unittestgenerator;
 
-import okhttp3.*;
-import org.springframework.stereotype.Component;
+import okhttp3.*; // ‘okhttp3’ is a library that provides an HTTP client for Java
+import org.springframework.stereotype.Component; // ‘@Component’ is a Spring annotation that indicates that this class is a Spring component
 
-import java.io.IOException;
+import java.io.IOException; // ‘IOException’ is a checked exception that is thrown when an I/O operation fails
 
-@Component // indicates that this class is a Spring component
+@Component
 public class OpenAIAPIClient {
-    
+ 
+    private final OkHttpClient httpClient; // ‘OkHttpClient’ is a class that is used to make HTTP requests to the OpenAI API
+    private final String openaiApiKey; // holds OpenAI API key
+    private final String openaiApiUrl; // holds the base URL for the OpenAI API
 }
