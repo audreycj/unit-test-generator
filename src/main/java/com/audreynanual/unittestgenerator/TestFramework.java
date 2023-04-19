@@ -1,5 +1,7 @@
 package com.audreynanual.unittestgenerator;
 
+import java.util.List;
+
 public interface TestFramework {
     
     String generateSetupCode(String function);

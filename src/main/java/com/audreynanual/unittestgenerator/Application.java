@@ -8,6 +8,7 @@ public class Application {
     
     public static void main(String[] args) {
                 
-        CommandLine.run(new TestGeneratorCLI(), args);
+        int exitCode = new CommandLine(new TestGeneratorCLI()).execute(args);
+        System.exit(exitCode);
     }
 }
