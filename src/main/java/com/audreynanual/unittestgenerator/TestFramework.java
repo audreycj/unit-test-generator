@@ -1,5 +1,10 @@
 package com.audreynanual.unittestgenerator;
 
-public class TestFramework {
+public interface TestFramework {
     
+    String generateSetupCode(String function);
+    
+    String generateTeardownCode(String function);
+    
+    String generateTestCode(String function, List<TestInput> testInputs);
 }
