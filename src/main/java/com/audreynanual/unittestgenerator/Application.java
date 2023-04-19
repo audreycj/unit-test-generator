@@ -1,3 +1,6 @@
+// This is the main entry point for the Spring Boot application.
+// It initializes the Spring context and wires together the different components of the application.
+
 package com.audreynanual.unittestgenerator;
 
 import org.springframework.boot.SpringApplication;
