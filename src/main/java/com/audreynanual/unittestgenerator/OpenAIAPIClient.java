@@ -14,4 +14,12 @@ public class OpenAIAPIClient {
     private final OkHttpClient httpClient; // ‘OkHttpClient’ is a class that is used to make HTTP requests to the OpenAI API
     private final String openaiApiKey; // holds OpenAI API key
     private final String openaiApiUrl; // holds the base URL for the OpenAI API
+
+    public OpenAIAPIClient() { // constructor method
+        httpClient = new OkHttpClient();
+        openaiApiKey = "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";
+        openaiApiUrl = "https://api.openai.com/v1/completions";
+    }
+
+
 }
