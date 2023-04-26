@@ -161,4 +161,7 @@ $RECYCLE.BIN/
 # Node modules
 node_modules/
 
+# OpenAI API Key
+application.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,java,visualstudiocode,maven
