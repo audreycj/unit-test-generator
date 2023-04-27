@@ -13,14 +13,17 @@ public class Application {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // Accept user input for the function they want to generate a unit test for
-        System.out.println("==================== CLI Unit Test Generator ====================");
+        System.out.println("==================== CLI Unit Test Generator ====================\n");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the function you want to generate a unit test for: ");
-        String searchString = scanner.nextLine();
+        System.out.print(("Programming language used: "));
+        String language = scanner.nextLine();
+        System.out.println("\nFunction you want to test: ");
+        String function = scanner.nextLine();
 
         // Create a request object to send to the OpenAI API
         ObjectMapper objectMapper = new ObjectMapper();
-        ApiRequest apiRequest = new ApiRequest("text-davinci-003", searchString, 0.3, 1000);
+        ApiRequest apiRequest = new ApiRequest("text-davinci-003", "Create unit tests for this "
+                + language + " function: " + function + "\n Include comments for each unit test.", 0.3, 2000);
         String input = objectMapper.writeValueAsString(apiRequest);
 
         // Create a request to send to the OpenAI API
@@ -35,9 +38,14 @@ public class Application {
         HttpClient client = HttpClient.newHttpClient();
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
-
-        // TODO: Use the OpenAI API to generate a unit test for the function
+        if (response.statusCode() == 200) {
+            ApiResponse apiResponse = objectMapper.readValue(response.body(), ApiResponse.class);
+            String answer = apiResponse.choices()[apiResponse.choices().length - 1].text();
+            if(!answer.isEmpty()) {
+                System.out.println(answer);
+        } else {
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+        }
     }
-}
+}}
