@@ -1,6 +1,8 @@
 package com.audreynanual.unittestgenerator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
 
+@SpringBootApplication // This annotation tells Spring Boot that this is the main class
 public class Application {
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -58,5 +61,7 @@ public class Application {
             System.out.println(response.statusCode());
             System.out.println(response.body());
         }
+
+    SpringApplication.run(Application.class, args); // This line starts the Spring Boot application
     }
 }}
