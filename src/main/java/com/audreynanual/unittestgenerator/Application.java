@@ -12,18 +12,27 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        // Accept user input for the function they want to generate a unit test for
-        System.out.println("==================== CLI Unit Test Generator ====================\n");
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(("Programming language used: "));
-        String language = scanner.nextLine();
-        System.out.println("\nFunction you want to test: ");
-        String function = scanner.nextLine();
+        // Get the programming language and function from the user
+        String language;
+        String function;
+
+        if(args.length > 0) { // If the user has provided arguments, use those
+            language = args[0]; // The first argument is the language
+            function = args[1]; // The second argument is the function
+
+        } else { // Otherwise, prompt the user for input
+            Scanner scanner = new Scanner(System.in);
+            System.out.print(("Programming language used: "));
+            language = scanner.nextLine();
+            System.out.println("\nFunction you want to test: ");
+            function = scanner.nextLine();
+        }
 
         // Create a request object to send to the OpenAI API
         ObjectMapper objectMapper = new ObjectMapper();
-        ApiRequest apiRequest = new ApiRequest("text-davinci-003", "Create unit tests for this "
-                + language + " function: " + function + "\n Include comments for each unit test.", 0.3, 2000);
+        ApiRequest apiRequest = new ApiRequest("text-davinci-003", "Generate unit test for this "
+                + language + " function:\n\n" + function + "\n\nInclude comments for each unit test.",
+                0.3, 4000);
         String input = objectMapper.writeValueAsString(apiRequest);
 
         // Create a request to send to the OpenAI API
@@ -36,14 +45,16 @@ public class Application {
 
         // Send the request to the OpenAI API
         HttpClient client = HttpClient.newHttpClient();
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString()); // Send the request to the OpenAI API
 
-        if (response.statusCode() == 200) {
-            ApiResponse apiResponse = objectMapper.readValue(response.body(), ApiResponse.class);
-            String answer = apiResponse.choices()[apiResponse.choices().length - 1].text();
-            if(!answer.isEmpty()) {
-                System.out.println(answer);
-        } else {
+        if (response.statusCode() == 200) { // If the request was successful, print the response
+            ApiResponse apiResponse = objectMapper.readValue(response.body(), ApiResponse.class); // Parse the response
+            String answer = apiResponse.choices()[apiResponse.choices().length - 1].text(); // Get the last choice (assuming it's the best)
+
+            if(!answer.isEmpty()) { // If the answer is not empty, print it
+                System.out.print(answer);
+
+        } else { // Otherwise, print the status code and body
             System.out.println(response.statusCode());
             System.out.println(response.body());
         }
