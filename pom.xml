@@ -1,119 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.audreynanual</groupId>
-	<artifactId>unit-test-generator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Unit Test Generator</name>
-	<description>CLI-based unit test generator using OpenAI API, Spring Boot, Picocli, and GraalVM native-image.</description>
-	<properties>
-		<java.version>17</java.version>
-		<jackson.version>2.14.2</jackson.version>
-		<native.maven.plugin.version>0.9.21</native.maven.plugin.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>info.picocli</groupId>
-			<artifactId>picocli</artifactId>
-			<version>4.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>info.picocli</groupId>
-			<artifactId>picocli-codegen</artifactId>
-			<version>4.7.0</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-	</dependencies>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.audreynanual</groupId>
+    <artifactId>unit-test-generator</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Unit Test Generator</name>
+    <description>CLI-based unit test generator using OpenAI API, Spring Boot, Picocli, and GraalVM native-image.
+    </description>
 
+    <properties>
+        <java.version>17</java.version>
+        <picocli.version>4.7.3</picocli.version>
+        <mainclass>com.audreynanual.unittestgenerator.Application</mainclass>
+    </properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.graalvm.buildtools</groupId>
-				<artifactId>native-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-		<finalName>unittest-generator</finalName>
-	</build>
+    <dependencies>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>${picocli.version}</version>
+        </dependency>
+        <!-- graalvm native image required: build Picocli model at compile time rather than at runtime-->
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-codegen</artifactId>
+            <version>${picocli.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-spring-boot-starter</artifactId>
+            <version>${picocli.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-
-	<profiles>
-		<profile>
-			<id>native</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.graalvm.buildtools</groupId>
-						<artifactId>native-maven-plugin</artifactId>
-						<version>${native.maven.plugin.version}</version>
-						<extensions>true</extensions>
-						<executions>
-							<execution>
-								<id>build-native</id>
-								<goals>
-									<goal>compile-no-fork</goal>
-								</goals>
-								<phase>package</phase>
-							</execution>
-							<execution>
-								<id>test-native</id>
-								<goals>
-									<goal>test</goal>
-								</goals>
-								<phase>test</phase>
-							</execution>
-						</executions>
-						<configuration>
-							<imageName>unittestgenerator</imageName>
-							<mainClass>com.audreynanual.unittestgenerator.Application</mainClass>
-							<verbose>true</verbose>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <build>
+        <finalName>unittest-generator</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${mainclass}</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
