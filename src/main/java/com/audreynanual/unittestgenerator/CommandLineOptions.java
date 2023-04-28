@@ -13,17 +13,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+// This class is used to parse command line options
 @Command(name = "unittestgenerator", mixinStandardHelpOptions = true, version = "1.0",
         description = "Generates unit tests for a given programming language and function")
 @Component
 public class CommandLineOptions implements Runnable {
 
-    @Option(names = {"-l", "--language"}, required = false, description = "Programming language used")
+    // The @Option annotation is used to specify command line options
+    @Option(names = {"-l", "--language"}, required = false, description = "Programming language used") // The required flag is set to false because the default value is "java"
     public String language = "java";
 
-    @Option(names = {"-f", "--function"}, required = false, description = "Function to generate unit tests for")
+    @Option(names = {"-f", "--function"}, required = false, description = "Function to generate unit tests for") // The required flag is set to false because the default value is "public int sum(int a, int b) { return a + b; }"
     public String function = "public int sum(int a, int b) { return a + b; }";
 
+    // The run method is called when the command line options are parsed
     public void run() {
         // Create a request object to send to the OpenAI API
         ObjectMapper objectMapper = new ObjectMapper();
