@@ -16,11 +16,11 @@ import java.net.http.HttpResponse;
         description = "Generates unit tests for a given programming language and function")
 public class CommandLineOptions implements Runnable {
 
-    @Option(names = {"-l", "--language"}, required = true, description = "Programming language used")
-    public String language;
+    @Option(names = {"-l", "--language"}, required = false, description = "Programming language used")
+    public String language = "java";
 
-    @Option(names = {"-f", "--function"}, required = true, description = "Function to generate unit tests for")
-    public String function;
+    @Option(names = {"-f", "--function"}, required = false, description = "Function to generate unit tests for")
+    public String function = "public int sum(int a, int b) { return a + b; }";
 
     public void run() {
         // Create a request object to send to the OpenAI API
