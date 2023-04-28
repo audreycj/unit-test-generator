@@ -3,6 +3,7 @@ package com.audreynanual.unittestgenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.stereotype.Component;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -14,6 +15,7 @@ import java.net.http.HttpResponse;
 
 @Command(name = "unittestgenerator", mixinStandardHelpOptions = true, version = "1.0",
         description = "Generates unit tests for a given programming language and function")
+@Component
 public class CommandLineOptions implements Runnable {
 
     @Option(names = {"-l", "--language"}, required = false, description = "Programming language used")
